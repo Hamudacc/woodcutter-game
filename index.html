@@ -8,26 +8,52 @@
     <h1>숲</h1>
     <p>나무 개수: <span id="woodCount">0</span></p>
     <button id="woodButton">도끼질 하기</button>
+  <p>일꾼 수: <span id="workerCount">0</span>명</p>
+<button id="hireButton">일꾼 고용하기 (나무 10개 소모)</button>
 
     <h3>활동 로그</h3>
     <div id="logArea" style="height: 150px; border: 1px solid #ccc; overflow-y: scroll; padding: 10px;"></div>
 
     <script>
-        let wood = 0;
-        
-        // 로그를 추가하는 함수
-        function addLog(message) {
-            const logArea = document.getElementById('logArea');
-            const newMessage = document.createElement('p'); // 새로운 문단 만들기
-            newMessage.innerText = message; // 내용 넣기
-            logArea.prepend(newMessage); // 가장 위에 추가하기 (아래로 쌓으려면 append 사용)
-        }
+    let wood = 0;
+    let workers = 0; // 일꾼 수 변수
 
-        document.getElementById('woodButton').onclick = function() {
-            wood = wood + 1;
+    // 로그 함수 (기존과 동일)
+    function addLog(message) {
+        const logArea = document.getElementById('logArea');
+        const newMessage = document.createElement('p');
+        newMessage.innerText = message;
+        logArea.prepend(newMessage);
+    }
+
+    // 도끼질 버튼
+    document.getElementById('woodButton').onclick = function() {
+        wood++;
+        document.getElementById('woodCount').innerText = wood;
+    };
+
+    // 일꾼 고용 버튼
+    document.getElementById('hireButton').onclick = function() {
+        if (wood >= 10) {
+            wood -= 10;
+            workers++;
             document.getElementById('woodCount').innerText = wood;
-            addLog("나무를 1개 얻었습니다. 현재 나무: " + wood);
-        };
-    </script>
+            document.getElementById('workerCount').innerText = workers;
+            addLog("일꾼을 고용했습니다. (남은 나무: " + wood + ")");
+        } else {
+            addLog("나무가 부족합니다! (필요: 10)");
+        }
+    };
+
+    // 자동 생산 루프 (핵심!)
+    // setInterval은 정해진 시간(1000ms = 1초)마다 코드를 반복 실행합니다.
+    setInterval(function() {
+        if (workers > 0) {
+            wood += workers; // 일꾼 수만큼 나무 증가
+            document.getElementById('woodCount').innerText = wood;
+            // 너무 로그가 많이 찍히면 시끄러우니, 가끔만 찍도록 조정 가능
+        }
+    }, 1000); 
+</script>
 </body>
 </html>
