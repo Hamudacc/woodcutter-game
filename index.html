@@ -9,11 +9,24 @@
     <p>나무 개수: <span id="woodCount">0</span></p>
     <button id="woodButton">도끼질 하기</button>
 
+    <h3>활동 로그</h3>
+    <div id="logArea" style="height: 150px; border: 1px solid #ccc; overflow-y: scroll; padding: 10px;"></div>
+
     <script>
         let wood = 0;
+        
+        // 로그를 추가하는 함수
+        function addLog(message) {
+            const logArea = document.getElementById('logArea');
+            const newMessage = document.createElement('p'); // 새로운 문단 만들기
+            newMessage.innerText = message; // 내용 넣기
+            logArea.prepend(newMessage); // 가장 위에 추가하기 (아래로 쌓으려면 append 사용)
+        }
+
         document.getElementById('woodButton').onclick = function() {
             wood = wood + 1;
             document.getElementById('woodCount').innerText = wood;
+            addLog("나무를 1개 얻었습니다. 현재 나무: " + wood);
         };
     </script>
 </body>
