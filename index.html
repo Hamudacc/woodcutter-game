@@ -1,1 +1,14 @@
+<h1>나무꾼 게임</h1>
+<p>나무 개수: <span id="woodCount">0</span></p>
+<button id="woodButton">도끼질 하기</button>
 
+<script>
+  // 2. 데이터 모델링 (상태 관리) [cite: 13, 14]
+  let wood = 0;
+
+  // 3. 상호작용 (이벤트) [cite: 7, 15]
+  document.getElementById('woodButton').onclick = function() {
+    wood = wood + 1; // 나무 증가
+    document.getElementById('woodCount').innerText = wood; // 화면에 보여주기
+  };
+</script>
